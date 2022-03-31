@@ -3,3 +3,5 @@ ebin/engine.app
 ebin/engine_app.beam
 ebin/engine_sup.beam
 ebin/patient_monitor.beam
+deps/*
+.erlang.mk/rebar/*
