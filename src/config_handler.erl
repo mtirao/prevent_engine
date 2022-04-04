@@ -13,10 +13,45 @@ init(Req0, State) ->
 
 
 application(<<"GET">>, _, Req) ->
+    Configs = config_json_handler:list(),
     cowboy_req:reply(200,
         #{<<"content-type">> => <<"application/json">>},
-        <<"Hello world!">>,
+        Configs,
         Req);
+
+application(<<"POST">>, _, Req) ->
+    HasBody = cowboy_req:has_body(Req),
+    case HasBody of
+        true ->  Length = cowboy_req:body_length(Req),
+            {ok, Data, _} = cowboy_req:read_body(Req, #{length => Length}),
+            Config = jsone:decode(Data),
+            io:format("~p~n", [Config]),
+            {ok, Result} = db_handler:create(Config),
+                case Result of
+                    {{_, _, _}, []} -> 
+                        cowboy_req:reply(204, Req);
+                    _ -> 
+                        cowboy_req:reply(400, Req) 
+                end;
+        false -> cowboy_req:reply(400, Req)
+    end;
+
+application(<<"PUT">>, _, Req) ->
+    HasBody = cowboy_req:has_body(Req),
+    case HasBody of
+        true ->  Length = cowboy_req:body_length(Req),
+            {ok, Data, _} = cowboy_req:read_body(Req, #{length => Length}),
+            Config = jsone:decode(Data),
+            io:format("~p~n", [Config]),
+            {ok, Result} = db_handler:update(Config),
+                case Result of
+                    {{_, _, _}, []} -> 
+                        cowboy_req:reply(204, Req);
+                    _ -> 
+                        cowboy_req:reply(400, Req) 
+                end;
+        false -> cowboy_req:reply(400, Req)
+    end;
 
 application(_, _, Req) ->
     %% Method not allowed.
