@@ -1,3 +1,6 @@
--name engine@127.0.0.1
--setcookie engine
--heart
+-sname engine_rebar3
+
+-setcookie engine_rebar3_cookie
+
++K true
++A30

@@ -1,4 +1,9 @@
--module(engine_sup).
+%%%-------------------------------------------------------------------
+%% @doc engine_rebar3 top level supervisor.
+%% @end
+%%%-------------------------------------------------------------------
+
+-module(engine_rebar3_sup).
 -behaviour(supervisor).
 
 -export([start_link/0]).
@@ -14,3 +19,5 @@ init([]) ->
 	{ok, {{one_for_one, 1, 5}, Procs}}.
 
 
+
+%% internal functions

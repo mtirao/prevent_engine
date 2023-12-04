@@ -1,4 +1,9 @@
--module(engine_app).
+%%%-------------------------------------------------------------------
+%% @doc engine_rebar3 public API
+%% @end
+%%%-------------------------------------------------------------------
+
+-module(engine_rebar3_app).
 -behaviour(application).
 
 -export([start/2]).
@@ -16,3 +21,6 @@ start(_Type, _Args) ->
 
 stop(_State) ->
 	ok.
+
+
+%% internal functions
