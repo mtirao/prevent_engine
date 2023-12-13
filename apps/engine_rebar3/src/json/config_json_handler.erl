@@ -7,7 +7,7 @@
 %    lists:flatten([io_lib:format("~c", [V]) || V <- L]).
 
 list() -> 
-    {ok, {{_, Count}, Columns}} = db_handler:configs(),
+    {ok, {{_, Count}, Columns}} = config_db_handler:configs(),
     Function = fun({Id, Parameter_Name, Parameter_Value}, Acc) ->  [#{id => Id, parametername => Parameter_Name, parametervalue => Parameter_Value} | Acc] end,
     Values = lists:foldl(Function, [], Columns),
     binary_to_list(jsone:encode(#{count => Count, configs => Values})).

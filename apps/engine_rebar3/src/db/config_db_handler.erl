@@ -4,13 +4,14 @@
 -export([configs/0, create/1, update/1, query/1]).
 
 connect() ->
-    pgsql_connection:open("localhost", "prevent_engine", "mtirao", "").
+    pgsql_connection:open("localhost", "prevent_engine", "postgres", "").
 
 close(Conn) ->
     pgsql_connection:close(Conn).
 
 configs() ->
     Conn = connect(),
+    erlang:display(Conn),
     Result = pgsql_connection:simple_query("select * from config", Conn),
     close(Conn),
     {ok, Result}.

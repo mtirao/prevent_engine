@@ -26,7 +26,7 @@ application(<<"POST">>, _, Req) ->
             {ok, Data, _} = cowboy_req:read_body(Req, #{length => Length}),
             Config = jsone:decode(Data),
             io:format("~p~n", [Config]),
-            {ok, Result} = db_handler:create(Config),
+            {ok, Result} = config_db_handler:create(Config),
                 case Result of
                     {{_, _, _}, []} -> 
                         cowboy_req:reply(204, Req);
@@ -43,7 +43,7 @@ application(<<"PUT">>, _, Req) ->
             {ok, Data, _} = cowboy_req:read_body(Req, #{length => Length}),
             Config = jsone:decode(Data),
             io:format("~p~n", [Config]),
-            {ok, Result} = db_handler:update(Config),
+            {ok, Result} = config_db_handler:update(Config),
                 case Result of
                     {{_, _, _}, []} -> 
                         cowboy_req:reply(204, Req);
