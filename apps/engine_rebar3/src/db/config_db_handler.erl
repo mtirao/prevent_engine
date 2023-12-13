@@ -12,7 +12,7 @@ close(Conn) ->
 configs() ->
     Conn = connect(),
     erlang:display(Conn),
-    Result = pgsql_connection:simple_query("select * from config", Conn),
+    Result = pgsql_connection:simple_query("select id, parameter_name, parameter_value from config", Conn),
     close(Conn),
     {ok, Result}.
     
